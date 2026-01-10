@@ -1,3 +1,4 @@
+import numpy as np
 from gol.engine import GameOfLife
 
 def test_block_is_stable():
@@ -9,8 +10,7 @@ def test_block_is_stable():
     game.toggle(2, 1)
     game.toggle(2, 2)
 
-    before = [row[:] for row in game.grid]
+    before = game.grid.copy()
     game.step()
 
-    assert game.grid == before
-
+    assert np.array_equal(game.grid, before)
