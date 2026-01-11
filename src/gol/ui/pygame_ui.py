@@ -1,6 +1,6 @@
 import pygame
 
-from gol.config import ALIVE_COLOR, CELL_SIZE, DEAD_COLOR, FPS
+from gol.config import ALIVE_COLOR, CELL_SIZE, DEAD_COLOR, FPS, STEP_INTERVAL
 
 
 def run(game):
@@ -13,21 +13,42 @@ def run(game):
     pygame.display.set_caption("Game of Life")
 
     clock = pygame.time.Clock()
-    running = True
+
     paused = False
+    pending_steps = 0
+    sim_time_acc = 0.0
+
+    running = True
 
     while running:
-        # --- Event handling (quit only)
+        # --- Events
         for event in pygame.event.get():
+            # closing window
             if event.type == pygame.QUIT:
                 running = False
-
+            # Spacebar = Pause
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     paused = not paused
+                # n press = 1 step
+                elif event.key == pygame.K_n and paused:
+                    pending_steps += 1
+
+        dt = clock.tick(FPS) / 1000.0
+
+        while pending_steps > 0:
+            game.step()
+            pending_steps -= 1
 
         if not paused:
-            game.step()
+            sim_time_acc += dt
+            while sim_time_acc >= STEP_INTERVAL:
+                game.step()
+                sim_time_acc -= STEP_INTERVAL
+        else:
+            for _ in range(pending_steps):
+                game.step()
+            pending_steps = 0
 
         # --- Draw
         screen.fill(DEAD_COLOR)

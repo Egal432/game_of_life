@@ -7,7 +7,12 @@ def main():
     game.toggle(39, 30)
     game.toggle(40, 30)
     game.toggle(41, 30)
-
+    game.toggle(42, 30)
+    game.toggle(42, 32)
+    game.toggle(42, 31)
+    game.toggle(42, 33)
+    game.toggle(43, 31)
+    game.toggle(44, 31)
     run(game)
 
 
