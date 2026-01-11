@@ -38,6 +38,13 @@ def run(game):
                 # simple undo with history of 1000 ~ 10 mb max
                 elif event.key == pygame.K_b:
                     game.undo()
+            # mouse click toggles cells
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if paused and event.button == 1:  # left click
+                    mx, my = event.pos
+                    x = mx // CELL_SIZE
+                    y = my // CELL_SIZE
+                    game.toggle(x, y)
 
         dt = clock.tick(FPS) / 1000.0
 
