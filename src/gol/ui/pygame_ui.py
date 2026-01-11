@@ -35,6 +35,9 @@ def run(game):
                 # n press = 1 step
                 elif event.key == pygame.K_n and paused:
                     pending_steps += 1
+                # simple undo with history of 1000 ~ 10 mb max
+                elif event.key == pygame.K_b:
+                    game.undo()
 
         dt = clock.tick(FPS) / 1000.0
 
