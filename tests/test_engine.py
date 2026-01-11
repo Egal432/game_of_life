@@ -30,3 +30,13 @@ def test_undo_restores_previous_state():
     game.undo()
 
     assert np.array_equal(game.grid, before)
+
+
+def test_toggle_can_be_undone():
+    game = GameOfLife(5, 5)
+
+    game.toggle(2, 2)
+    assert game.grid[2, 2] == 1
+
+    game.undo()
+    assert game.grid[2, 2] == 0

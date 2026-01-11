@@ -14,7 +14,10 @@ class GameOfLife:
         self.grid.fill(0)
 
     def toggle(self, x: int, y: int) -> None:
-        self.grid[y, x] ^= 1
+        if not (0 <= x < self.width and 0 <= y < self.height):
+            return
+        self._save_state()
+        self.grid[y, x] = 1 - self.grid[y, x]
 
     def alive(self, x: int, y: int) -> bool:
         return bool(self.grid[y, x])
