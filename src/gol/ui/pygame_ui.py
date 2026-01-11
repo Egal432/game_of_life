@@ -14,6 +14,7 @@ def run(game):
 
     clock = pygame.time.Clock()
     running = True
+    paused = False
 
     while running:
         # --- Event handling (quit only)
@@ -21,8 +22,12 @@ def run(game):
             if event.type == pygame.QUIT:
                 running = False
 
-        # --- Update simulation
-        game.step()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    paused = not paused
+
+        if not paused:
+            game.step()
 
         # --- Draw
         screen.fill(DEAD_COLOR)
