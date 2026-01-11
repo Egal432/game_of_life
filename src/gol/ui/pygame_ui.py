@@ -9,6 +9,8 @@ from gol.config import (
     FPS,
     MAX_STEP,
     MIN_STEP,
+    POINT_COLOR,
+    POINT_RADIUS,
     STEP_INTERVAL,
 )
 
@@ -118,6 +120,9 @@ def run(game):
 
         for y in range(game.height):
             for x in range(game.width):
+                cx = x * CELL_SIZE + CELL_SIZE // 2
+                cy = y * CELL_SIZE + CELL_SIZE // 2
+                pygame.draw.rect(screen, POINT_COLOR, (cx, cy, 1, 1))
                 if game.alive(x, y):
                     rect = pygame.Rect(
                         x * CELL_SIZE,
