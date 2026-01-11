@@ -1,3 +1,5 @@
+import time
+
 import pygame
 
 from gol.config import ALIVE_COLOR, CELL_SIZE, DEAD_COLOR, FPS, STEP_INTERVAL
