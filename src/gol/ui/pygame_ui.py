@@ -18,6 +18,10 @@ def run(game):
     MIN_STEP = 0.02
     MAX_STEP = 1.0
 
+    dragging = False
+    drag_value = None
+    dragged_cells = set()
+
     pygame.init()
 
     width_px = game.width * CELL_SIZE
@@ -60,13 +64,36 @@ def run(game):
                 elif event.key == pygame.K_MINUS:
                     step_interval = min(MAX_STEP, step_interval * 1.25)
 
-            # mouse click toggles cells
+            # mouse click toggles cells, dragging draws cells
+            # left mouse = alive, right mouse = unalive
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if paused and event.button == 1:  # left click
+                if paused and event.button in (1, 3):
+
                     mx, my = event.pos
                     x = mx // CELL_SIZE
                     y = my // CELL_SIZE
-                    game.toggle(x, y)
+
+                    dragging = True
+                    drag_value = event.button == 1
+                    game.snapshot()
+
+                    game.set_cell(x, y, drag_value)
+                    dragged_cells.clear()
+
+            elif event.type == pygame.MOUSEMOTION:
+                if paused and dragging:
+                    mx, my = event.pos
+                    x = mx // CELL_SIZE
+                    y = my // CELL_SIZE
+
+                    if (x, y) not in dragged_cells:
+                        game.set_cell(x, y, drag_value)
+                        dragged_cells.add((x, y))
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button in (1, 3):
+                    dragging = False
+                    drag_value = None
 
         dt = clock.tick(FPS) / 1000.0
 

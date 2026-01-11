@@ -27,6 +27,9 @@ class GameOfLife:
         if len(self.history) > self.max_history:
             self.history.pop(0)
 
+    def snapshot(self):
+        self._save_state()
+
     def step(self) -> None:
         self._save_state()
 
@@ -53,3 +56,8 @@ class GameOfLife:
 
         self.grid = self.history.pop()
         return True
+
+    def set_cell(self, x, y, value):
+        if not (0 <= x < self.width and 0 <= y < self.height):
+            return
+        self.grid[y, x] = 1 if value else 0
