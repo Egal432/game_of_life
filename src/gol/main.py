@@ -1,15 +1,14 @@
 from gol.engine import GameOfLife
+from gol.ui.pygame_ui import run
 
 
 def main():
-    game = GameOfLife(5, 5)
-    game.toggle(1, 2)
-    game.toggle(2, 2)
-    game.toggle(3, 2)
+    game = GameOfLife(80, 60)
+    game.toggle(39, 30)
+    game.toggle(40, 30)
+    game.toggle(41, 30)
 
-    print(game.grid)
-    game.step()
-    print(game.grid)
+    run(game)
 
 
 if __name__ == "__main__":

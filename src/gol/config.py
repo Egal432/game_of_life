@@ -1,0 +1,5 @@
+CELL_SIZE = 10
+FPS = 2
+
+ALIVE_COLOR = (255, 255, 255)
+DEAD_COLOR = (0, 0, 0)
