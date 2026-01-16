@@ -1,7 +1,9 @@
 import numpy as np
 
 from gol.engine import GameOfLife
-
+from gol.ui.camera import Camera, screen_to_world, world_to_screen
+from gol.config import (ALIVE_COLOR, CELL_SIZE, DEAD_COLOR, FPS, MAX_STEP,
+                        MIN_STEP, POINT_COLOR, POINT_RADIUS, STEP_INTERVAL)
 
 def test_block_is_stable():
     game = GameOfLife(4, 4)
@@ -40,3 +42,12 @@ def test_toggle_can_be_undone():
 
     game.undo()
     assert game.grid[2, 2] == 0
+
+
+def test_world_to_screen_roundtrip():
+    cell_size = CELL_SIZE
+    cam = Camera(x=10, y=5, zoom=2)
+    wx, wy = 12, 7
+    sx, sy = world_to_screen(cam, wx, wy, cell_size)
+    wx2, wy2 = screen_to_world(cam, sx, sy, cell_size)
+    assert (wx, wy) == (int(wx2), int(wy2))

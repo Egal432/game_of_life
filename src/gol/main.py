@@ -3,7 +3,7 @@ from gol.ui.pygame_ui import run
 
 
 def main():
-    game = GameOfLife(80, 60)
+    game = GameOfLife(200, 200)
     game.toggle(39, 30)
     game.toggle(40, 30)
     game.toggle(41, 30)
